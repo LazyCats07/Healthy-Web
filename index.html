@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rencana Transformasi Kebugaran Anda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #073B4C;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .flowchart-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            min-height: 100px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .traffic-light-dot {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+        }
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+        .modal-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 90%;
+            width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-hidden {
+            display: none;
+            opacity: 0;
+        }
+        .modal-visible {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-visible .modal-container {
+            transform: scale(1);
+        }
+        .prose {
+            color: #374151;
+        }
+        .prose strong {
+            color: #118AB2;
+        }
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        .prose li {
+            margin-top: 0.5rem;
+        }
+        .prose p {
+             margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12 text-white">
+            <h1 class="text-4xl md:text-6xl font-black text-[#06D6A0] tracking-tight">Cetak Biru Transformasi Anda</h1>
+            <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">Panduan visual untuk mencapai tubuh ideal, kebugaran prima, dan perut six-pack melalui strategi nutrisi warteg dan latihan terstruktur.</p>
+        </header>
+
+        <main class="space-y-8">
+
+            <!-- Data Awal Section -->
+            <section id="data-awal" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-[#118AB2]">Dimulai Dari Sini: Data Awal Anda</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-600 mb-2">Indeks Massa Tubuh (IMT)</h3>
+                        <p class="text-5xl font-extrabold text-[#FF6B6B]">26.5</p>
+                        <p class="text-gray-500 mt-1">(Target: 18.5 - 24.9)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-4 mt-4 overflow-hidden">
+                           <div class="bg-gradient-to-r from-[#06D6A0] to-[#FFD166] h-4 rounded-full" style="width: 93.9%;">
+                             <div class="bg-[#FF6B6B] h-4 float-right" style="width: 6.1%;"></div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-600 mb-2">Metabolisme Basal (BMR)</h3>
+                        <p class="text-5xl font-extrabold text-[#118AB2]">2.001</p>
+                        <p class="text-gray-500 mt-1">kkal / hari (saat istirahat)</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-600 mb-2">Kebutuhan Kalori Harian (TDEE)</h3>
+                        <p class="text-5xl font-extrabold text-[#06D6A0]">2.751</p>
+                        <p class="text-gray-500 mt-1">kkal / hari (dengan aktivitas)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Strategi Section -->
+            <section id="strategi" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-[#118AB2]">Rencana Permainan: Defisit Kalori & Makro</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Target Kalori Harian Anda</h3>
+                        <p class="mb-6">Untuk membakar lemak secara efektif, kita akan menciptakan defisit kalori. Anda akan mengonsumsi sekitar <span class="font-bold text-[#FF6B6B]">500-750 kalori lebih sedikit</span> dari yang Anda bakar setiap hari. Ini adalah kunci utama untuk mengungkap otot perut Anda.</p>
+                        <div class="chart-container">
+                            <canvas id="caloriesChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                         <h3 class="text-2xl font-bold mb-4">Pembagian Makronutrien</h3>
+                        <p class="mb-6">Kalori Anda akan dibagi menjadi tiga makronutrien utama. Fokus tinggi pada protein untuk melindungi otot, karbohidrat untuk energi latihan, dan lemak sehat untuk fungsi hormonal.</p>
+                        <div class="chart-container">
+                            <canvas id="macrosChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nutrisi Warteg Section -->
+            <section id="nutrisi-warteg" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-2 text-[#118AB2]">Fueling Station: Panduan Cerdas Makan di Warteg</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Warteg bisa menjadi sekutu Anda. Gunakan prinsip sederhana dan contoh menu di bawah ini untuk pemesanan cerdas.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-4">Prinsip Pemesanan Cepat</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">1. Metode "Isi Piringku" 🥗</h4>
+                                <div class="w-full aspect-square max-w-[250px] mx-auto rounded-full border-4 border-dashed border-[#118AB2] flex flex-col overflow-hidden">
+                                    <div class="h-1/2 w-full bg-[#06D6A0]/30 flex items-center justify-center p-2"><span class="font-bold text-center text-lg text-[#073B4C]">½ Piring<br/>SAYURAN</span></div>
+                                    <div class="h-1/2 w-full flex">
+                                        <div class="h-full w-1/2 bg-[#FF6B6B]/30 flex items-center justify-center p-2"><span class="font-bold text-center text-lg text-[#073B4C]">¼ Piring<br/>PROTEIN</span></div>
+                                        <div class="h-full w-1/2 bg-[#FFD166]/30 flex items-center justify-center p-2"><span class="font-bold text-center text-lg text-[#073B4C]">¼ Piring<br/>KARBO</span></div>
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-sm text-gray-600 text-center">Selalu minta <span class="font-bold">"Nasi Setengah"</span>.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">2. Sistem Lampu Lalu Lintas 🚦</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-center gap-4"><div class="traffic-light-dot bg-[#06D6A0]"></div><div><h4 class="font-bold">HIJAU (Utama)</h4><p class="text-sm text-gray-600">Pepes, Rebus, Bakar, Tumis.</p></div></li>
+                                    <li class="flex items-center gap-4"><div class="traffic-light-dot bg-[#FFD166]"></div><div><h4 class="font-bold">KUNING (Moderat)</h4><p class="text-sm text-gray-600">Goreng (tidak tepung), Bacem.</p></div></li>
+                                    <li class="flex items-center gap-4"><div class="traffic-light-dot bg-[#FF6B6B]"></div><div><h4 class="font-bold">MERAH (Hindari)</h4><p class="text-sm text-gray-600">Gorengan, Santan, Mie.</p></div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-4">📖 Buku Menu Warteg Sehat</h3>
+                        <p class="mb-4 text-sm text-gray-600">Gunakan kombinasi ini sebagai inspirasi saat memesan.</p>
+                        <div class="space-y-3">
+                            <div class="border border-gray-200 p-4 rounded-lg bg-white">
+                                <h4 class="font-bold text-gray-800">Kombinasi 1: Protein Maksimal</h4>
+                                <ul class="list-disc list-inside text-sm mt-2 text-gray-600">
+                                    <li><strong>Nasi:</strong> Setengah Porsi</li>
+                                    <li><strong>Protein Utama:</strong> Pepes Ikan</li>
+                                    <li><strong>Protein Tambahan:</strong> Telur Rebus</li>
+                                    <li><strong>Sayur:</strong> Tumis Kangkung</li>
+                                </ul>
+                                <p class="text-right font-bold text-sm mt-2 text-[#118AB2]">~550 kkal</p>
+                            </div>
+                            <div class="border border-gray-200 p-4 rounded-lg bg-white">
+                                <h4 class="font-bold text-gray-800">Kombinasi 2: Bakar & Segar</h4>
+                                 <ul class="list-disc list-inside text-sm mt-2 text-gray-600">
+                                    <li><strong>Nasi:</strong> Setengah Porsi</li>
+                                    <li><strong>Protein Utama:</strong> Ayam Bakar (Dada)</li>
+                                    <li><strong>Protein Tambahan:</strong> Tahu Bacem</li>
+                                    <li><strong>Sayur:</strong> Sayur Asem</li>
+                                </ul>
+                                <p class="text-right font-bold text-sm mt-2 text-[#118AB2]">~600 kkal</p>
+                            </div>
+                            <div class="border border-gray-200 p-4 rounded-lg bg-white">
+                                <h4 class="font-bold text-gray-800">Kombinasi 3: Rendah Karbo</h4>
+                                 <ul class="list-disc list-inside text-sm mt-2 text-gray-600">
+                                    <li><strong>Nasi:</strong> Tanpa Nasi</li>
+                                    <li><strong>Protein Utama:</strong> Ikan Goreng</li>
+                                    <li><strong>Protein Tambahan:</strong> 2 Telur Rebus</li>
+                                    <li><strong>Sayur:</strong> Sayur Sop + Tumis Tauge</li>
+                                </ul>
+                                <p class="text-right font-bold text-sm mt-2 text-[#118AB2]">~450 kkal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Jadwal Latihan Section (UPDATED) -->
+            <section id="jadwal-latihan" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-[#118AB2]">Rencana Latihan Hybrid 5 Hari/Minggu (45 Menit)</h2>
+                <div class="space-y-4">
+                    <div class="workout-day-card" data-day="Push Day">
+                        <div class="flowchart-step bg-[#118AB2] text-white">
+                            <div><p class="font-bold">SENIN: PUSH DAY</p><p class="text-sm">(Dada, Bahu, Trisep)</p></div>
+                        </div>
+                    </div>
+                    <div class="workout-day-card" data-day="Pull Day">
+                        <div class="flowchart-step bg-[#06D6A0] text-white">
+                            <div><p class="font-bold">RABU: PULL DAY</p><p class="text-sm">(Punggung, Bisep)</p></div>
+                        </div>
+                    </div>
+                    <div class="workout-day-card" data-day="Leg Day">
+                        <div class="flowchart-step bg-[#FF6B6B] text-white">
+                            <div><p class="font-bold">JUMAT: LEG DAY</p><p class="text-sm">(Kaki & Bokong)</p></div>
+                        </div>
+                    </div>
+                    <div class="workout-day-card" data-day="Metabolic Conditioning">
+                        <div class="flowchart-step bg-[#FFD166] text-[#073B4C]">
+                            <div><p class="font-bold">SABTU: METCON</p><p class="text-sm">(Kardio & Bakar Lemak)</p></div>
+                        </div>
+                    </div>
+                    <div class="workout-day-card" data-day="Core & Recovery">
+                        <div class="flowchart-step bg-gray-200 text-[#073B4C]">
+                            <div><p class="font-bold">MINGGU: CORE & RECOVERY</p><p class="text-sm">(Fokus Perut & Pemulihan)</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progresi Latihan Section -->
+            <section id="progresi-latihan" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-2 text-[#118AB2]">Kunci Progres: Rencana Latihan 4 Minggu</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">Tubuh butuh tantangan baru untuk berubah. Ikuti progresi set dan repetisi ini setiap minggu. Ini disebut <span class="font-bold">Progressive Overload</span>.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-[#073B4C] uppercase bg-gray-100">
+                            <tr>
+                                <th scope="col" class="px-4 py-3 rounded-l-lg">Latihan (Contoh Push Day)</th>
+                                <th scope="col" class="px-4 py-3 text-center">Minggu 1</th>
+                                <th scope="col" class="px-4 py-3 text-center">Minggu 2</th>
+                                <th scope="col" class="px-4 py-3 text-center">Minggu 3</th>
+                                <th scope="col" class="px-4 py-3 text-center rounded-r-lg">Minggu 4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b"><th scope="row" class="px-4 py-4 font-medium whitespace-nowrap">Push-up</th><td class="px-4 py-4 text-center">3 x 8-10</td><td class="px-4 py-4 text-center bg-blue-50">3 x 10-12</td><td class="px-4 py-4 text-center bg-blue-100">4 x 10</td><td class="px-4 py-4 text-center bg-blue-200 font-bold">4 x AMRAP</td></tr>
+                            <tr class="border-b"><th scope="row" class="px-4 py-4 font-medium whitespace-nowrap">Pike Push-up</th><td class="px-4 py-4 text-center">3 x 6-8</td><td class="px-4 py-4 text-center bg-blue-50">3 x 8-10</td><td class="px-4 py-4 text-center bg-blue-100">4 x 8</td><td class="px-4 py-4 text-center bg-blue-200 font-bold">4 x 10</td></tr>
+                            <tr class="border-b"><th scope="row" class="px-4 py-4 font-medium whitespace-nowrap">Triceps Dips</th><td class="px-4 py-4 text-center">3 x 10-12</td><td class="px-4 py-4 text-center bg-blue-50">3 x 12-15</td><td class="px-4 py-4 text-center bg-blue-100">4 x 12</td><td class="px-4 py-4 text-center bg-blue-200 font-bold">4 x 15</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <p class="text-center text-xs text-gray-500 mt-4">*AMRAP: As Many Reps As Possible (repetisi sebanyak mungkin dengan form yang benar). Pola progresi yang sama berlaku untuk semua hari latihan.</p>
+            </section>
+            
+            <!-- Sixpack Section -->
+            <section id="sixpack" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                 <h2 class="text-3xl font-bold text-center mb-2 text-[#118AB2]">Menempa Six-Pack: Sirkuit Perut 3x Seminggu</h2>
+                 <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">Lakukan sirkuit ini di akhir sesi hari Rabu & Jumat, dan sebagai fokus utama di hari Minggu untuk membangun otot perut yang kuat dan terlihat.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-gray-50 rounded-lg p-4 text-center"><p class="text-4xl">1️⃣</p><h4 class="font-bold mt-2">Plank</h4><p class="text-sm text-gray-600">Tahan 30-45 detik</p></div>
+                    <div class="bg-gray-50 rounded-lg p-4 text-center"><p class="text-4xl">2️⃣</p><h4 class="font-bold mt-2">Bicycle Crunch</h4><p class="text-sm text-gray-600">15-20 repetisi / sisi</p></div>
+                    <div class="bg-gray-50 rounded-lg p-4 text-center"><p class="text-4xl">3️⃣</p><h4 class="font-bold mt-2">Leg Raise</h4><p class="text-sm text-gray-600">15-20 repetisi</p></div>
+                    <div class="bg-gray-50 rounded-lg p-4 text-center"><p class="text-4xl">4️⃣</p><h4 class="font-bold mt-2">Russian Twist</h4><p class="text-sm text-gray-600">15-20 repetisi / sisi</p></div>
+                </div>
+                <p class="text-center text-gray-600 mt-6">Lakukan semua latihan secara berurutan. Istirahat 60-90 detik setelah 1 putaran. Ulangi untuk <strong>3-5 putaran</strong>.</p>
+            </section>
+
+        </main>
+        
+        <footer class="text-center mt-12 text-gray-400 text-sm">
+            <p>Konsistensi adalah Kunci. Percayai prosesnya.</p>
+            <p>&copy; 2025 Rencana Transformasi Pribadi Anda.</p>
+        </footer>
+
+    </div>
+
+    <!-- Modal for Static Content -->
+    <div id="staticModal" class="modal-overlay modal-hidden">
+        <div class="modal-container">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalTitle" class="text-2xl font-bold text-[#073B4C]"></h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <div id="modalContent" class="text-gray-700 prose max-w-none">
+                <!-- Static content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const energeticPlayfulPalette = {
+                red: '#FF6B6B',
+                yellow: '#FFD166',
+                green: '#06D6A0',
+                blue: '#118AB2',
+                navy: '#073B4C'
+            };
+
+            // Chart.js rendering
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) { return label.join(' '); } else { return label; }
+            };
+            const defaultChartOptions = {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: energeticPlayfulPalette.navy, font: { size: 14 }}},
+                    tooltip: { callbacks: { title: tooltipTitleCallback }, backgroundColor: energeticPlayfulPalette.navy, titleColor: 'white', bodyColor: 'white', padding: 10, cornerRadius: 4 }
+                }
+            };
+            const ctxCalories = document.getElementById('caloriesChart');
+            if(ctxCalories) {
+                new Chart(ctxCalories, {
+                    type: 'doughnut',
+                    data: { labels: ['Target Kalori Harian', 'Defisit untuk Bakar Lemak'], datasets: [{ label: 'Kalori', data: [2250, 501], backgroundColor: [energeticPlayfulPalette.green, energeticPlayfulPalette.red], borderColor: '#ffffff', borderWidth: 4, hoverOffset: 4 }] },
+                    options: { ...defaultChartOptions, cutout: '70%', plugins: { ...defaultChartOptions.plugins, title: { display: true, text: 'Target Harian: 2.250 kkal', font: { size: 18, weight: 'bold' }, color: energeticPlayfulPalette.navy, padding: { bottom: 20 }}}}
+                });
+            }
+            const ctxMacros = document.getElementById('macrosChart');
+            if(ctxMacros) {
+                new Chart(ctxMacros, {
+                    type: 'doughnut',
+                    data: { labels: ['Protein (225g)', 'Karbohidrat (197g)', 'Lemak (62g)'], datasets: [{ label: '% dari Kalori', data: [40, 35, 25], backgroundColor: [energeticPlayfulPalette.red, energeticPlayfulPalette.yellow, energeticPlayfulPalette.blue], borderColor: '#ffffff', borderWidth: 4, hoverOffset: 4 }] },
+                    options: { ...defaultChartOptions, cutout: '70%', plugins: { ...defaultChartOptions.plugins, title: { display: true, text: 'Distribusi Makronutrien', font: { size: 18, weight: 'bold' }, color: energeticPlayfulPalette.navy, padding: { bottom: 20 }}}}
+                });
+            }
+
+            // Static Content Modal
+            const modal = document.getElementById('staticModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const closeModalBtn = document.getElementById('closeModal');
+
+            function showModal(title, content) {
+                modalTitle.textContent = title;
+                modalContent.innerHTML = content;
+                modal.classList.remove('modal-hidden');
+                modal.classList.add('modal-visible');
+            }
+
+            function hideModal() {
+                modal.classList.add('modal-hidden');
+                modal.classList.remove('modal-visible');
+                modalContent.innerHTML = '';
+            }
+
+            closeModalBtn.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    hideModal();
+                }
+            });
+            
+            const workoutVariations = {
+                "Push Day": `
+                    <p>Berikut beberapa variasi untuk mengganti latihan Push Day Anda:</p>
+                    <ul>
+                        <li><strong>Decline Push-up:</strong> Letakkan kaki Anda di atas kursi atau benda yang lebih tinggi untuk meningkatkan beban pada dada bagian atas.</li>
+                        <li><strong>Incline Push-up:</strong> Letakkan tangan Anda di atas kursi atau meja untuk mengurangi beban, cocok jika push-up biasa masih terlalu berat.</li>
+                        <li><strong>Wide Grip Push-up:</strong> Lebarkan posisi tangan Anda untuk lebih menargetkan otot dada.</li>
+                    </ul>
+                `,
+                "Pull Day": `
+                    <p>Berikut beberapa variasi untuk mengganti latihan Pull Day Anda:</p>
+                    <ul>
+                        <li><strong>Towel Rows:</strong> Gunakan handuk yang disangkutkan pada tiang atau pintu yang kokoh, lalu tarik tubuh Anda.</li>
+                        <li><strong>Reverse Plank:</strong> Posisi plank terbalik untuk melatih punggung bawah dan glutes.</li>
+                        <li><strong>Glute Bridge March:</strong> Lakukan glute bridge sambil mengangkat satu kaki secara bergantian.</li>
+                    </ul>
+                `,
+                "Leg Day": `
+                    <p>Berikut beberapa variasi untuk mengganti latihan Leg Day Anda:</p>
+                    <ul>
+                        <li><strong>Bulgarian Split Squat:</strong> Letakkan satu kaki di belakang Anda di atas kursi, lalu lakukan squat.</li>
+                        <li><strong>Cossack Squat:</strong> Squat ke satu sisi sambil menjaga kaki lainnya tetap lurus.</li>
+                        <li><strong>Jump Squats:</strong> Tambahkan lompatan eksplosif di akhir setiap repetisi squat.</li>
+                    </ul>
+                `,
+                "Metabolic Conditioning": `
+                    <p>Berikut beberapa variasi untuk mengganti latihan MetCon Anda:</p>
+                    <ul>
+                        <li><strong>Tuck Jumps:</strong> Lompat setinggi mungkin sambil menarik lutut ke dada.</li>
+                        <li><strong>Lateral Jumps:</strong> Lompat dari sisi ke sisi melewati sebuah objek imajiner.</li>
+                        <li><strong>Inchworms:</strong> Bungkukkan badan, jalan dengan tangan ke depan hingga posisi push-up, lalu jalan dengan kaki ke depan.</li>
+                    </ul>
+                `,
+                "Core & Recovery": `
+                    <p>Berikut beberapa variasi untuk mengganti latihan Core Anda:</p>
+                    <ul>
+                        <li><strong>Hollow Body Hold:</strong> Berbaring telentang, angkat bahu dan kaki sedikit dari lantai, tahan posisi seperti perahu.</li>
+                        <li><strong>Side Plank:</strong> Plank menyamping untuk menargetkan otot obliques.</li>
+                        <li><strong>Dead Bug:</strong> Berbaring telentang, turunkan lengan dan kaki yang berlawanan secara bersamaan dan terkontrol.</li>
+                    </ul>
+                `
+            };
+
+            // Event Listeners for Workout Variation Buttons
+            document.querySelectorAll('.workout-day-card').forEach(card => {
+                const day = card.dataset.day;
+                
+                const button = document.createElement('button');
+                button.innerHTML = `📖 Lihat Variasi`;
+                button.className = 'mt-2 bg-[#FFD166] text-sm text-[#073B4C] font-semibold py-1 px-3 rounded-full hover:bg-[#ffc94a] transition-all transform hover:scale-105';
+                
+                card.querySelector('.flowchart-step > div').appendChild(button);
+
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent other events
+                    const content = workoutVariations[day];
+                    if (content) {
+                        showModal(`Variasi Latihan untuk ${day}`, content);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
